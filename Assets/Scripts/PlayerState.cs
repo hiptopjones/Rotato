@@ -11,7 +11,7 @@ public class PlayerState : MonoBehaviour
     [SerializeField]
     private int numPowerUps;
     [SerializeField]
-    private int numGravity;
+    private int numSkips;
     [SerializeField]
     private int numCrashes;
 
@@ -25,9 +25,9 @@ public class PlayerState : MonoBehaviour
         numPowerUps++;
     }
 
-    public void OnGravity()
+    public void OnSkip()
     {
-        numGravity++;
+        numSkips++;
     }
 
     public void OnMove()

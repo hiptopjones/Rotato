@@ -10,7 +10,8 @@ public class FollowMovement : MonoBehaviour
     [SerializeField]
     private Vector3 offset;
 
-    void Update()
+    // Using LateUpdate() prevents camera wobble
+    void LateUpdate()
     {
         transform.position = follow.position + offset;
         transform.LookAt(follow.transform);

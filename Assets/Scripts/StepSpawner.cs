@@ -52,7 +52,10 @@ public class StepSpawner : MonoBehaviour
 
     private void SpawnStep()
     {
+        float z = spawnCount * spawnDistance;
+
         GameObject step = new GameObject($"Step {spawnCount}");
+        step.transform.position = new Vector3(0, 0, z);
         step.transform.parent = parent;
         RotationMovement rotationMovement = step.AddComponent<RotationMovement>();
         rotationMovement.lerpTime = 0.15f;
@@ -63,7 +66,6 @@ public class StepSpawner : MonoBehaviour
         int targetX = targetIndex % numColumns;
         int targetY = targetIndex / numColumns;
 
-        float z = spawnCount * spawnDistance;
         for (int y = 0; y < numRows; y++)
         {
             for (int x = 0; x < numColumns; x++)

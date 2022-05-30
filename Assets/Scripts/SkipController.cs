@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GravityController : MonoBehaviour
+public class SkipController : MonoBehaviour
 {
     [SerializeField]
-    private AudioClip gravitySound;
+    private AudioClip skipSound;
 
     private AudioSource audioSource;
     private PlayerLocator playerLocator;
@@ -39,24 +39,25 @@ public class GravityController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.G))
             {
-                // Move the step out of the way
                 GameObject step = selectedVoxel.transform.parent.gameObject;
+
+                // Use physics to move the step out of the way in a fun way
                 Rigidbody rigidbody = step.AddComponent<Rigidbody>();
-                rigidbody.useGravity = true;
+                rigidbody.angularVelocity = step.transform.right * 5;
                 rigidbody.velocity = 50 * -Vector3.up;
 
-                OnGravity();
+                OnSkip();
 
                 Destroy(step, 0.5f);
             }
         }
     }
 
-    private void OnGravity()
+    private void OnSkip()
     {
-        audioSource.clip = gravitySound;
+        audioSource.clip = skipSound;
         audioSource.Play();
 
-        playerState.OnGravity();
+        playerState.OnSkip();
     }
 }
