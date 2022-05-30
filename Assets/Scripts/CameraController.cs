@@ -8,16 +8,13 @@ public class CameraController : MonoBehaviour
     private Camera camera;
 
     [SerializeField]
-    private GameObject cameraTarget;
+    private Transform rabbit;
 
     [SerializeField]
-    private GameObject xAxisMarker;
+    private GameObject leftMarker;
 
     [SerializeField]
-    private GameObject yAxisMarker;
-
-    [SerializeField]
-    private GameObject zAxisMarker;
+    private GameObject rightMarker;
 
     [SerializeField]
     private AnimationCurve lerpCurve;
@@ -41,22 +38,18 @@ public class CameraController : MonoBehaviour
     {
         // TODO: Check that variables are set properly
 
-        sourcePosition = zAxisMarker.transform.position;
-        targetPosition = zAxisMarker.transform.position;
+        sourcePosition = leftMarker.transform.position;
+        targetPosition = leftMarker.transform.position;
 
         horiztonalPositions = new List<Vector3>
         {
-            xAxisMarker.transform.position,
-            zAxisMarker.transform.position,
-            -xAxisMarker.transform.position,
+            leftMarker.transform.position,
+            rightMarker.transform.position
         };
-        defaultHoriztonalIndex = horiztonalPositions.IndexOf(zAxisMarker.transform.position);
+        defaultHoriztonalIndex = horiztonalPositions.IndexOf(leftMarker.transform.position);
 
         verticalPositions = new List<Vector3>
         {
-            -yAxisMarker.transform.position,
-            zAxisMarker.transform.position,
-            yAxisMarker.transform.position,
         };
     }
 
@@ -71,7 +64,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 if (currentHorizontalIndex >= 0)
                 {
@@ -80,7 +73,7 @@ public class CameraController : MonoBehaviour
                     SwitchView(horiztonalPositions[currentHorizontalIndex]);
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            else if (Input.GetKeyDown(KeyCode.A))
             {
                 if (currentHorizontalIndex >= 0)
                 {
@@ -89,7 +82,7 @@ public class CameraController : MonoBehaviour
                     SwitchView(horiztonalPositions[currentHorizontalIndex]);
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            else if (Input.GetKeyDown(KeyCode.W))
             {
                 if (currentVerticalIndex >= 0)
                 {
@@ -98,7 +91,7 @@ public class CameraController : MonoBehaviour
                     SwitchView(verticalPositions[currentVerticalIndex]);
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            else if (Input.GetKeyDown(KeyCode.S))
             {
                 if (currentVerticalIndex >= 0)
                 {
@@ -118,16 +111,16 @@ public class CameraController : MonoBehaviour
         float percent = currentLerpTime / lerpTime;
         float curvePercent = lerpCurve.Evaluate(percent);
 
-        camera.transform.position = Vector3.Lerp(sourcePosition, targetPosition, curvePercent);
-        camera.transform.LookAt(cameraTarget.transform);
+        camera.transform.position = Vector3.Lerp(sourcePosition + rabbit.transform.position, targetPosition + rabbit.transform.position, curvePercent);
+        camera.transform.LookAt(rabbit.transform);
     }
 
 
     private void SwitchView(Vector3 newTargetPosition)
     {
         // First we force any previous movement to complete
-        camera.transform.position = targetPosition;
-        camera.transform.LookAt(cameraTarget.transform);
+        camera.transform.position = targetPosition + rabbit.transform.position;
+        camera.transform.LookAt(rabbit.transform);
 
         // Then we adjust the source and target
         sourcePosition = targetPosition;
