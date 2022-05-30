@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerLocator : MonoBehaviour
 {
+    public Voxel selectedVoxel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +19,8 @@ public class PlayerLocator : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
         {
             GameObject target = hit.collider.gameObject;
-            Voxel voxel = target.GetComponentInParent<Voxel>();
-            voxel.isSelected = true;
+            selectedVoxel = target.GetComponentInParent<Voxel>();
+            selectedVoxel.isSelected = true;
         }
     }
 }

@@ -10,6 +10,10 @@ public class Voxel : MonoBehaviour
     [SerializeField]
     private Material selectedMaterial;
 
+    public bool isSolid;
+    public bool isTarget;
+    public bool isEmpty;
+
     public bool isSelected;
 
     private MeshRenderer meshRenderer;

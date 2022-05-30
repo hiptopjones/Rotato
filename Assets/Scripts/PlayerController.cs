@@ -18,6 +18,17 @@ public class PlayerController : MonoBehaviour
 
     private float keyDownTime;
 
+    private PlayerState playerState;
+
+    private void Start()
+    {
+        playerState = GetComponent<PlayerState>();
+        if (playerState == null)
+        {
+            throw new System.Exception($"Unable to get component of type {nameof(PlayerState)}");
+        }
+    }
+
     void Update()
     {
         int deltaX = 0;
@@ -31,8 +42,8 @@ public class PlayerController : MonoBehaviour
         HandleKeyPress(KeyCode.RightArrow, 1, ref deltaX);
 
         transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x + deltaX, -numColumns / 2f, numColumns / 2f),
-            Mathf.Clamp(transform.position.y + deltaY, -numRows / 2f, numRows / 2f),
+            Mathf.Clamp(transform.position.x + deltaX, Mathf.Ceil(-numColumns / 2f), Mathf.Floor(numColumns / 2f)),
+            Mathf.Clamp(transform.position.y + deltaY, Mathf.Ceil(-numRows / 2f), Mathf.Floor(numRows / 2f)),
             rabbit.position.z);
 
     }
@@ -45,6 +56,8 @@ public class PlayerController : MonoBehaviour
             {
                 keyDownTime = 0;
                 delta += increment;
+
+                playerState.OnMove();
             }
             else
             {
@@ -52,6 +65,8 @@ public class PlayerController : MonoBehaviour
                 {
                     keyDownTime -= keyRepeatTime;
                     delta += increment;
+
+                    playerState.OnMove();
                 }
             }
         }

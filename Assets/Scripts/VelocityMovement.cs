@@ -7,9 +7,19 @@ public class VelocityMovement : MonoBehaviour
     [SerializeField]
     private Vector3 velocity;
 
+    private bool isPaused;
+
     // Update is called once per frame
     void Update()
     {
-        transform.position += velocity * Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isPaused = !isPaused;
+        }
+
+        if (!isPaused)
+        {
+            transform.position += velocity * Time.deltaTime;
+        }
     }
 }

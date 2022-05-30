@@ -12,13 +12,13 @@ public class StepSpawner : MonoBehaviour
     private GameObject voxelPrefab;
 
     [SerializeField]
-    private Material spaceMaterial;
+    private Material emptyMaterial;
 
     [SerializeField]
-    private Material lineMaterial;
+    private Material solidMaterial;
 
     [SerializeField]
-    private Material validMaterial;
+    private Material targetMaterial;
 
     [SerializeField]
     private float spawnTime;
@@ -54,9 +54,14 @@ public class StepSpawner : MonoBehaviour
     {
         GameObject step = new GameObject($"Step {spawnCount}");
         step.transform.parent = parent;
+        RotationMovement rotationMovement = step.AddComponent<RotationMovement>();
+        rotationMovement.lerpTime = 0.15f;
+        rotationMovement.lerpCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
         int numVoxels = numRows * numColumns;
-        int validIndex = random.Next(numVoxels);
+        int targetIndex = random.Next(numVoxels);
+        int targetX = targetIndex % numColumns;
+        int targetY = targetIndex / numColumns;
 
         float z = spawnCount * spawnDistance;
         for (int y = 0; y < numRows; y++)
@@ -65,23 +70,30 @@ public class StepSpawner : MonoBehaviour
             {
                 int voxelIndex = y * numColumns + x;
 
-                GameObject voxel = Instantiate(voxelPrefab, new Vector3(x - Mathf.Floor(numColumns / 2f), y - Mathf.Floor(numRows / 2f), z), Quaternion.identity, step.transform);
-                if (voxelIndex == validIndex)
+                GameObject obj = Instantiate(voxelPrefab, new Vector3(x - Mathf.Floor(numColumns / 2f), y - Mathf.Floor(numRows / 2f), z), Quaternion.identity, step.transform);
+                Voxel voxel = obj.GetComponent<Voxel>();
+
+                if (voxelIndex == targetIndex)
                 {
-                    voxel.GetComponentInChildren<MeshRenderer>().material = validMaterial;
-                }
-                else if (voxelIndex % 2 == 0)
-                {
-                    voxel.GetComponentInChildren<MeshRenderer>().material = spaceMaterial;
+                    voxel.isTarget = true;
+                    voxel.GetComponentInChildren<MeshRenderer>().material = targetMaterial;
                 }
                 else
                 {
-                    voxel.GetComponentInChildren<MeshRenderer>().material = lineMaterial;
+                    if ((y >= targetY - 1 && y <= targetY + 1) && (x >= targetX - 1 && x <= targetX + 1))
+                    {
+                        voxel.isEmpty = true;
+                        voxel.GetComponentInChildren<MeshRenderer>().material = emptyMaterial;
+                    }
+                    else
+                    {
+                        voxel.isSolid = true;
+                        voxel.GetComponentInChildren<MeshRenderer>().material = solidMaterial;
+                    }
                 }
             }
         }
 
-        Destroy(step, 20);
         spawnCount++;
     }
 }
