@@ -21,16 +21,13 @@ public class StepSpawner : MonoBehaviour
     private Material targetMaterial;
 
     [SerializeField]
+    private LevelSettings levelSettings;
+
+    [SerializeField]
     private float spawnTime;
 
     [SerializeField]
     private float spawnDistance;
-
-    [SerializeField]
-    private int numRows;
-
-    [SerializeField]
-    private int numColumns;
 
     private System.Random random = new System.Random();
     private int spawnCount;
@@ -61,18 +58,18 @@ public class StepSpawner : MonoBehaviour
         rotationMovement.lerpTime = 0.15f;
         rotationMovement.lerpCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-        int numVoxels = numRows * numColumns;
+        int numVoxels = levelSettings.mapSize * levelSettings.mapSize;
         int targetIndex = random.Next(numVoxels);
-        int targetX = targetIndex % numColumns;
-        int targetY = targetIndex / numColumns;
+        int targetX = targetIndex % levelSettings.mapSize;
+        int targetY = targetIndex / levelSettings.mapSize;
 
-        for (int y = 0; y < numRows; y++)
+        for (int y = 0; y < levelSettings.mapSize; y++)
         {
-            for (int x = 0; x < numColumns; x++)
+            for (int x = 0; x < levelSettings.mapSize; x++)
             {
-                int voxelIndex = y * numColumns + x;
+                int voxelIndex = y * levelSettings.mapSize + x;
 
-                GameObject obj = Instantiate(voxelPrefab, new Vector3(x - Mathf.Floor(numColumns / 2f), y - Mathf.Floor(numRows / 2f), z), Quaternion.identity, step.transform);
+                GameObject obj = Instantiate(voxelPrefab, new Vector3(x - Mathf.Floor(levelSettings.mapSize / 2f), y - Mathf.Floor(levelSettings.mapSize / 2f), z), Quaternion.identity, step.transform);
                 Voxel voxel = obj.GetComponent<Voxel>();
 
                 if (voxelIndex == targetIndex)
