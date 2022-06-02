@@ -8,12 +8,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform rabbit;
 
+    [Header("Settings")]
     [SerializeField]
     private LevelSettings levelSettings;
 
     [SerializeField]
     private GameSettings gameSettings;
 
+    [Header("Events")]
     [SerializeField]
     private GameEvent onMoveEvent;
 

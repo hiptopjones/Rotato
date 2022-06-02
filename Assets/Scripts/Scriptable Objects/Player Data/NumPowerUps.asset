@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4efd3b5282d2107488dcb84532f9f6bf, type: 3}
   m_Name: NumPowerUps
   m_EditorClassIdentifier: 
-  value: 0
+  value: 6
