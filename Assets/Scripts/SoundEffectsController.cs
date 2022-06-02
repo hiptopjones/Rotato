@@ -19,6 +19,9 @@ public class SoundEffectsController : MonoBehaviour
     [SerializeField]
     private AudioClip powerUpSound;
 
+    [SerializeField]
+    private AudioClip invalidSound;
+
     private AudioSource audioSource;
 
     private void Start()
@@ -57,6 +60,12 @@ public class SoundEffectsController : MonoBehaviour
     public void PlayPowerUpSound()
     {
         audioSource.clip = powerUpSound;
+        audioSource.Play();
+    }
+
+    public void PlayInvalidSound()
+    {
+        audioSource.clip = invalidSound;
         audioSource.Play();
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class LevelSettings : ScriptableObject
 {
     public string levelName;
-    public int mapSize;
+    public int panelSize;
     public int numPowerUps;
     public bool isContinuousMovementEnabled;
     public bool isRotation90Enabled;

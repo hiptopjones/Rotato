@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameMode : ScriptableObject
 {
     public string modeName;
-    public int levelProgressionCount;
+    public int panelCount;
+    public float panelSpacing;
     public int speed;
 }

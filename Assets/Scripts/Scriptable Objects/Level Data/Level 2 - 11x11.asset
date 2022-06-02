@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 2 - 11x11
   m_EditorClassIdentifier: 
   levelName: Level 2
-  mapSize: 11
+  panelSize: 11
   numPowerUps: 1
   isContinuousMovementEnabled: 1
   isRotation90Enabled: 1
@@ -21,4 +21,4 @@ MonoBehaviour:
   isMirrorEnabled: 0
   isSkipEnabled: 1
   isBurstEnabled: 0
-  isLockAndPullEnabled: 0
+  isHardDropEnabled: 0

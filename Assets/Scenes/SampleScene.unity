@@ -393,6 +393,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160962732}
   m_CullTransparentMesh: 1
+--- !u!1 &173628151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 173628153}
+  - component: {fileID: 173628152}
+  m_Layer: 0
+  m_Name: Level Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &173628152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173628151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98a2ae89bc08684e86a7a60ed6383c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onLevelStarted: {fileID: 11400000, guid: 6bc1cf202e714134bb11501ff9489c9e, type: 2}
+--- !u!4 &173628153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173628151}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 690.1969, y: 371.17267, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &216766636
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +621,7 @@ RectTransform:
   - {fileID: 124873077}
   - {fileID: 772899536}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -593,7 +638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 264030906}
   m_Layer: 0
-  m_Name: Obstacles
+  m_Name: Panels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,7 +657,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &566149325
 GameObject:
@@ -949,7 +994,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -1466,7 +1511,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1048088792
 MonoBehaviour:
@@ -1618,8 +1663,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1483329542}
   - component: {fileID: 1483329541}
+  - component: {fileID: 1483329544}
+  - component: {fileID: 1483329543}
   m_Layer: 0
-  m_Name: Step Spawner
+  m_Name: Panel Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1639,12 +1686,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 264030906}
   voxelPrefab: {fileID: 2811545611998549637, guid: dbe9e30b64292794f8341a3f82aa71fb, type: 3}
+  panelPrefab: {fileID: 148571075925982848, guid: a65770920e20d0a428b7b72c3fd019ea, type: 3}
   emptyMaterial: {fileID: 2100000, guid: cf700be7522788f4ab87f3a0a0df1eb2, type: 2}
   solidMaterial: {fileID: 2100000, guid: 3ec5ac233937b244793411b63d6ef5ca, type: 2}
-  targetMaterial: {fileID: 2100000, guid: 5c936b49b3fc62f4fabc1f3cfa75e204, type: 2}
+  powerUpMaterial: {fileID: 2100000, guid: 5c936b49b3fc62f4fabc1f3cfa75e204, type: 2}
   levelSettings: {fileID: 11400000, guid: a0f705d3d5a932342a3efb46f0976ca3, type: 2}
-  spawnTime: 1.8
-  spawnDistance: 60
+  gameMode: {fileID: 11400000, guid: d940bb53725a4ce4ba00ce9cd9de698e, type: 2}
 --- !u!4 &1483329542
 Transform:
   m_ObjectHideFlags: 0
@@ -1660,6 +1707,74 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1483329543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483329540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1edc7b8ae3cdf614d8d82fb732d0c48e, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1483329541}
+        m_TargetAssemblyTypeName: PanelSpawner, Assembly-CSharp
+        m_MethodName: SpawnPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1483329544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483329540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 6bc1cf202e714134bb11501ff9489c9e, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1483329541}
+        m_TargetAssemblyTypeName: PanelSpawner, Assembly-CSharp
+        m_MethodName: SpawnPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1483329541}
+        m_TargetAssemblyTypeName: PanelSpawner, Assembly-CSharp
+        m_MethodName: SpawnPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1488176449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1783,7 +1898,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1806771222
 GameObject:
@@ -1801,6 +1916,7 @@ GameObject:
   - component: {fileID: 1806771228}
   - component: {fileID: 1806771227}
   - component: {fileID: 1806771226}
+  - component: {fileID: 1806771231}
   m_Layer: 0
   m_Name: Sound Effects
   m_TagString: Untagged
@@ -1921,6 +2037,7 @@ MonoBehaviour:
   skipSound: {fileID: 8300000, guid: a19bba2f5380bac49ba6f43659676ba6, type: 3}
   crashSound: {fileID: 8300000, guid: 9dc7f7f77bcc28042b7962a83efc906a, type: 3}
   powerUpSound: {fileID: 8300000, guid: 60c2403e764608d47a202f3f4e96752f, type: 3}
+  invalidSound: {fileID: 8300000, guid: 77abf9115107a2d429db05fedec4fa66, type: 3}
 --- !u!4 &1806771225
 Transform:
   m_ObjectHideFlags: 0
@@ -1934,7 +2051,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1806771226
 MonoBehaviour:
@@ -2076,6 +2193,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1806771231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806771222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 12dc72feb26cce045ba1bd3e0a158921, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1806771224}
+        m_TargetAssemblyTypeName: SoundEffectsController, Assembly-CSharp
+        m_MethodName: PlayInvalidSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1875896976
 GameObject:
   m_ObjectHideFlags: 0
@@ -2131,6 +2276,7 @@ MonoBehaviour:
   onCrashEvent: {fileID: 11400000, guid: ff80cdd33753ba649a6f929c89846925, type: 2}
   onPowerUpEvent: {fileID: 11400000, guid: 7aaf40844f0f5b747a7e9a9677032464, type: 2}
   onSkipEvent: {fileID: 11400000, guid: 8bab3c829162f2e4ba5eeb5690df73f7, type: 2}
+  onPanelCompletedEvent: {fileID: 11400000, guid: 1edc7b8ae3cdf614d8d82fb732d0c48e, type: 2}
 --- !u!54 &1875896981
 Rigidbody:
   m_ObjectHideFlags: 0

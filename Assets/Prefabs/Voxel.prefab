@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2811545611998549639}
   - component: {fileID: 2811545611998549636}
   - component: {fileID: 4070249233914543807}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Voxel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
   selectedMaterial: {fileID: 2100000, guid: 93f47216bb06438428d413fa2c3c6650, type: 2}
+  isSolid: 0
+  isPowerUp: 0
+  isEmpty: 0
   isSelected: 0
 --- !u!65 &4070249233914543807
 BoxCollider:

@@ -11,7 +11,7 @@ public class Voxel : MonoBehaviour
     private Material selectedMaterial;
 
     public bool isSolid;
-    public bool isTarget;
+    public bool isPowerUp;
     public bool isEmpty;
 
     public bool isSelected;

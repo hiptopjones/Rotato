@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 1 - 5x5
   m_EditorClassIdentifier: 
   levelName: Level 1
-  mapSize: 5
+  panelSize: 5
   numPowerUps: 1
   isContinuousMovementEnabled: 0
   isRotation90Enabled: 0
@@ -21,4 +21,4 @@ MonoBehaviour:
   isMirrorEnabled: 0
   isSkipEnabled: 0
   isBurstEnabled: 0
-  isLockAndPullEnabled: 0
+  isHardDropEnabled: 0

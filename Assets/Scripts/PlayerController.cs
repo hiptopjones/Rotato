@@ -31,7 +31,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameEvent onSkipEvent;
 
+    [SerializeField]
+    private GameEvent onInvalidEvent;
+
+    [SerializeField]
+    private GameEvent onPanelCompletedEvent;
+
     private float keyDownTime;
+    private bool isInputDisabled;
 
     private void Start()
     {
@@ -54,56 +61,78 @@ public class PlayerController : MonoBehaviour
         Voxel selectedVoxel = GetSelectedVoxel();
         if (selectedVoxel != null)
         {
-            GameObject selectedStep = selectedVoxel.transform.parent.gameObject;
+            GameObject selectedPanel = selectedVoxel.transform.parent.gameObject;
 
             if (levelSettings.isSkipEnabled)
             {
-                HandleSkip(selectedStep);
+                HandleSkip(selectedPanel);
             }
 
             if (levelSettings.isRotation90Enabled)
             {
-                HandleRotation(selectedStep);
+                HandleRotation(selectedPanel);
             }
         }
 
         HandleMovement();
     }
 
-    private void HandleRotation(GameObject selectedStep)
+    private void HandleRotation(GameObject selectedPanel)
     {
         // TODO: Add a setting to allow inverting this direction?
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Transform stepTransform = selectedStep.transform;
-            RotationMovement rotationMovement = stepTransform.GetComponent<RotationMovement>();
-            rotationMovement.Rotate(90);
+            if (isInputDisabled)
+            {
+                onInvalidEvent.Raise();
+            }
+            else
+            {
+                Transform panelTransform = selectedPanel.transform;
+                RotationMovement rotationMovement = panelTransform.GetComponent<RotationMovement>();
+                rotationMovement.Rotate(90);
 
-            onRotateEvent.Raise();
+                onRotateEvent.Raise();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            Transform stepTransform = selectedStep.transform;
-            RotationMovement rotationMovement = stepTransform.GetComponent<RotationMovement>();
-            rotationMovement.Rotate(-90);
+            if (isInputDisabled)
+            {
+                onInvalidEvent.Raise();
+            }
+            else
+            {
+                Transform panelTransform = selectedPanel.transform;
+                RotationMovement rotationMovement = panelTransform.GetComponent<RotationMovement>();
+                rotationMovement.Rotate(-90);
 
-            onRotateEvent.Raise();
+                onRotateEvent.Raise();
+            }
         }
     }
 
-    void HandleSkip(GameObject selectedStep)
+    void HandleSkip(GameObject selectedPanel)
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            // Use physics to move the step out of the way in a fun way
-            Rigidbody rigidbody = selectedStep.AddComponent<Rigidbody>();
-            rigidbody.angularVelocity = selectedStep.transform.right * 5;
-            rigidbody.velocity = 50 * -Vector3.up;
+            if (isInputDisabled)
+            {
+                onInvalidEvent.Raise();
+            }
+            else
+            {
+                // Use physics to move the panel out of the way in a fun way
+                Rigidbody rigidbody = selectedPanel.GetComponent<Rigidbody>();
+                rigidbody.angularVelocity = selectedPanel.transform.right * 5;
+                rigidbody.velocity = 50 * -Vector3.up;
 
-            onSkipEvent.Raise();
+                onSkipEvent.Raise();
+                onPanelCompletedEvent.Raise();
 
-            // TODO: Is this the right place to do this?
-            Destroy(selectedStep, 0.5f);
+                // TODO: Is this the right place to do this?
+                Destroy(selectedPanel, 0.5f);
+            }
         }
     }
 
@@ -120,8 +149,8 @@ public class PlayerController : MonoBehaviour
         HandleKeyPress(KeyCode.RightArrow, 1, ref deltaX);
 
         transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x + deltaX, Mathf.Ceil(-levelSettings.mapSize / 2f), Mathf.Floor(levelSettings.mapSize / 2f)),
-            Mathf.Clamp(transform.position.y + deltaY, Mathf.Ceil(-levelSettings.mapSize / 2f), Mathf.Floor(levelSettings.mapSize / 2f)),
+            Mathf.Clamp(transform.position.x + deltaX, Mathf.Ceil(-levelSettings.panelSize / 2f), Mathf.Floor(levelSettings.panelSize / 2f)),
+            Mathf.Clamp(transform.position.y + deltaY, Mathf.Ceil(-levelSettings.panelSize / 2f), Mathf.Floor(levelSettings.panelSize / 2f)),
             rabbit.position.z);
     }
 
@@ -131,21 +160,35 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(keycode))
             {
-                keyDownTime = 0;
-                delta += increment;
+                if (isInputDisabled)
+                {
+                    onInvalidEvent.Raise();
+                }
+                else
+                {
+                    keyDownTime = 0;
+                    delta += increment;
 
-                onMoveEvent.Raise();
+                    onMoveEvent.Raise();
+                }
             }
             else
             {
-                if (levelSettings.isContinuousMovementEnabled)
+                if (isInputDisabled)
                 {
-                    if (keyDownTime >= gameSettings.keyRepeatTime)
+                    // Ignore
+                }
+                else
+                {
+                    if (levelSettings.isContinuousMovementEnabled)
                     {
-                        keyDownTime -= gameSettings.keyRepeatTime;
-                        delta += increment;
+                        if (keyDownTime >= gameSettings.keyRepeatTime)
+                        {
+                            keyDownTime -= gameSettings.keyRepeatTime;
+                            delta += increment;
 
-                        onMoveEvent.Raise();
+                            onMoveEvent.Raise();
+                        }
                     }
                 }
             }
@@ -155,22 +198,51 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Voxel voxel = other.GetComponent<Voxel>();
-        if (voxel == null)
+        if (voxel != null)
         {
+            HandleVoxelCollision(voxel);
             return;
         }
 
+        Panel panel = other.GetComponent<Panel>();
+        if (panel != null)
+        {
+            HandlePanelCollision(panel);
+            return;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Panel panel = other.GetComponent<Panel>();
+        if (panel != null)
+        {
+            isInputDisabled = false;
+            Destroy(panel.gameObject, 0.1f);
+        }
+    }
+
+    private void HandleVoxelCollision(Voxel voxel)
+    {
         if (voxel.isSolid)
         {
             onCrashEvent.Raise();
+            onPanelCompletedEvent.Raise();
         }
-        else if (voxel.isTarget)
+        else if (voxel.isPowerUp)
         {
             onPowerUpEvent.Raise();
+            onPanelCompletedEvent.Raise();
         }
+        else if (voxel.isEmpty)
+        {
+            onPanelCompletedEvent.Raise();
+        }
+    }
 
-        // TODO: Is this the right place to do this?
-        Destroy(voxel.transform.parent.gameObject, 0.1f);
+    private void HandlePanelCollision(Panel panel)
+    {
+        isInputDisabled = true;
     }
 
     private Voxel GetSelectedVoxel()
@@ -178,7 +250,7 @@ public class PlayerController : MonoBehaviour
         Voxel selectedVoxel = null;
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, (1 << 10))) // Voxels is layer 10
         {
             GameObject target = hit.collider.gameObject;
             selectedVoxel = target.GetComponentInParent<Voxel>();
