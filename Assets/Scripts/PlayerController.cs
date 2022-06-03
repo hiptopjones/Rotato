@@ -32,9 +32,6 @@ public class PlayerController : MonoBehaviour
     private GameEvent onSkipEvent;
 
     [SerializeField]
-    private GameEvent onInvalidEvent;
-
-    [SerializeField]
     private GameEvent onPanelCompletedEvent;
 
     private float keyDownTime;
@@ -84,7 +81,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isInputDisabled)
             {
-                onInvalidEvent.Raise();
+                // Ignore
             }
             else
             {
@@ -99,7 +96,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isInputDisabled)
             {
-                onInvalidEvent.Raise();
+                // Ignore
             }
             else
             {
@@ -118,7 +115,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isInputDisabled)
             {
-                onInvalidEvent.Raise();
+                // Ignore
             }
             else
             {
@@ -162,7 +159,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (isInputDisabled)
                 {
-                    onInvalidEvent.Raise();
+                    // Ignore
                 }
                 else
                 {
