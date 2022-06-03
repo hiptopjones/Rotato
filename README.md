@@ -3,4 +3,4 @@ A game somehow inspired by the theme and limitation for [Mini Jam 107](https://i
 
 It was conceptualized as an rhythm game based on an orthographic projection and turning mechanic like Fez, but it evolved into something very different.
 
-![Alt text](Screenshot.GIF?raw=true "Optional Title")
+![Alt text](Screenshot.gif?raw=true "Optional Title")
