@@ -25,4 +25,4 @@ MonoBehaviour:
   isMirrorEnabled: 0
   isSkipEnabled: 0
   isBurstEnabled: 0
-  isHardDropEnabled: 0
+  isFastForwardEnabled: 1

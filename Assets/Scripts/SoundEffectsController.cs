@@ -19,6 +19,9 @@ public class SoundEffectsController : MonoBehaviour
     [SerializeField]
     private AudioClip energySound;
 
+    [SerializeField]
+    private AudioClip fastForwardSound;
+
     private AudioSource audioSource;
 
     private void Start()
@@ -57,6 +60,12 @@ public class SoundEffectsController : MonoBehaviour
     public void PlayEnergySound()
     {
         audioSource.clip = energySound;
+        audioSource.Play();
+    }
+
+    public void PlayFastForwrdSound()
+    {
+        audioSource.clip = fastForwardSound;
         audioSource.Play();
     }
 }

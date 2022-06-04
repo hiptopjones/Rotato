@@ -18,5 +18,5 @@ public class LevelSettings : ScriptableObject
     public bool isMirrorEnabled;
     public bool isSkipEnabled;
     public bool isBurstEnabled;
-    public bool isHardDropEnabled;
+    public bool isFastForwardEnabled;
 }

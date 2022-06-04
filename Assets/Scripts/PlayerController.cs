@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     private SimpleGameEvent onSkipEvent;
 
     [SerializeField]
+    private SimpleGameEvent onFastForwardEvent;
+
+    [SerializeField]
     private BaseParameterizedGameEvent<bool> onGateCleared;
 
     private LevelSettings levelSettings;
@@ -46,9 +49,32 @@ public class PlayerController : MonoBehaviour
             {
                 HandleRotation(selectedGate);
             }
+
+            if (levelSettings.isFastForwardEnabled)
+            {
+                HandleFastForward(selectedGate);
+            }
         }
 
         HandleMovement();
+    }
+
+    private void HandleFastForward(GameObject selectedGate)
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (isInputDisabled)
+            {
+                // Ignore
+            }
+            else
+            {
+                // Disable input during the fast forward
+                isInputDisabled = true;
+
+                onFastForwardEvent.Raise();
+            }
+        }
     }
 
     private void HandleRotation(GameObject selectedGate)

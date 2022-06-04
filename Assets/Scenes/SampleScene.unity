@@ -1973,6 +1973,7 @@ GameObject:
   - component: {fileID: 1806771228}
   - component: {fileID: 1806771227}
   - component: {fileID: 1806771231}
+  - component: {fileID: 1806771232}
   m_Layer: 0
   m_Name: Sound Effects
   m_TagString: Untagged
@@ -2093,6 +2094,7 @@ MonoBehaviour:
   skipSound: {fileID: 8300000, guid: a19bba2f5380bac49ba6f43659676ba6, type: 3}
   crashSound: {fileID: 8300000, guid: 9dc7f7f77bcc28042b7962a83efc906a, type: 3}
   energySound: {fileID: 8300000, guid: 60c2403e764608d47a202f3f4e96752f, type: 3}
+  fastForwardSound: {fileID: 8300000, guid: 6e7a359f614fc5545b9e1bfbe663ab7d, type: 3}
 --- !u!4 &1806771225
 Transform:
   m_ObjectHideFlags: 0
@@ -2248,6 +2250,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1806771232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806771222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b22bbc5bbbe84fe48897e59510260e76, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1806771224}
+        m_TargetAssemblyTypeName: SoundEffectsController, Assembly-CSharp
+        m_MethodName: PlayFastForwrdSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1875896976
 GameObject:
   m_ObjectHideFlags: 0
@@ -2300,6 +2330,7 @@ MonoBehaviour:
   onMoveEvent: {fileID: 11400000, guid: ed962861e1f22604d9ef7da59577cf94, type: 2}
   onRotateEvent: {fileID: 11400000, guid: de9fec493c2159d438e1df4150d662ba, type: 2}
   onSkipEvent: {fileID: 11400000, guid: cb9983d0f687b0e49848cef9706c56ad, type: 2}
+  onFastForwardEvent: {fileID: 11400000, guid: b22bbc5bbbe84fe48897e59510260e76, type: 2}
   onGateCleared: {fileID: 11400000, guid: 0e7ec8844e831b34f8f9789eb0def213, type: 2}
 --- !u!54 &1875896981
 Rigidbody:
@@ -2316,7 +2347,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &1875896982
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2340,7 +2371,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2141918311}
-  - component: {fileID: 2141918310}
+  - component: {fileID: 2141918312}
   m_Layer: 0
   m_Name: Rabbit
   m_TagString: Untagged
@@ -2348,19 +2379,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2141918310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2141918309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a8a5c7d53b9024a8c2d6d3e1a9761c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0, z: 30}
 --- !u!4 &2141918311
 Transform:
   m_ObjectHideFlags: 0
@@ -2376,3 +2394,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2141918312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141918309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be24f21bf2a6c7f4591a226a43966bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fastForwardListener:
+    gameEvent: {fileID: 11400000, guid: b22bbc5bbbe84fe48897e59510260e76, type: 2}
+  gateEnteredListener:
+    gameEvent: {fileID: 11400000, guid: 098f8c1363f51e44c9df5ceef89dec0c, type: 2}
+  velocity: {x: 0, y: 0, z: 30}
+  fastForwardMultiplier: 6
