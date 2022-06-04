@@ -6,76 +6,55 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private Transform rabbit;
+    private GameObject rabbit;
 
     [Header("Settings")]
-    [SerializeField]
-    private LevelSettings levelSettings;
-
     [SerializeField]
     private GameSettings gameSettings;
 
     [Header("Events")]
     [SerializeField]
-    private GameEvent onMoveEvent;
+    private SimpleGameEvent onMoveEvent;
 
     [SerializeField]
-    private GameEvent onRotateEvent;
+    private SimpleGameEvent onRotateEvent;
 
     [SerializeField]
-    private GameEvent onCrashEvent;
+    private SimpleGameEvent onSkipEvent;
 
     [SerializeField]
-    private GameEvent onPowerUpEvent;
+    private BaseParameterizedGameEvent<bool> onGateCleared;
 
-    [SerializeField]
-    private GameEvent onSkipEvent;
-
-    [SerializeField]
-    private GameEvent onPanelCompletedEvent;
+    private LevelSettings levelSettings;
 
     private float keyDownTime;
     private bool isInputDisabled;
 
-    private void Start()
-    {
-        CheckNotNull(rabbit, nameof(rabbit));
-        CheckNotNull(levelSettings, nameof(levelSettings));
-        CheckNotNull(gameSettings, nameof(gameSettings));
-        CheckNotNull(onMoveEvent, nameof(onMoveEvent));
-    }
-
-    private void CheckNotNull(object value, string variableName)
-    {
-        if (value == null)
-        {
-            throw new System.Exception($"Variable {variableName} is null");
-        }
-    }
-
     void Update()
     {
-        Voxel selectedVoxel = GetSelectedVoxel();
-        if (selectedVoxel != null)
+        Tile selectedTile = GetSelectedTile();
+        if (selectedTile != null)
         {
-            GameObject selectedPanel = selectedVoxel.transform.parent.gameObject;
+            GameObject selectedGate = selectedTile.transform.parent.gameObject;
 
             if (levelSettings.isSkipEnabled)
             {
-                HandleSkip(selectedPanel);
+                HandleSkip(selectedGate);
             }
 
             if (levelSettings.isRotation90Enabled)
             {
-                HandleRotation(selectedPanel);
+                HandleRotation(selectedGate);
             }
         }
 
         HandleMovement();
     }
 
-    private void HandleRotation(GameObject selectedPanel)
+    private void HandleRotation(GameObject selectedGate)
     {
+        // TODO: Should disable the raycast until rotation has stopped to avoid rays piercing this gate and selecting the next gate
+
         // TODO: Add a setting to allow inverting this direction?
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -85,8 +64,8 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Transform panelTransform = selectedPanel.transform;
-                RotationMovement rotationMovement = panelTransform.GetComponent<RotationMovement>();
+                Transform gateTransform = selectedGate.transform;
+                RotationMovement rotationMovement = gateTransform.GetComponent<RotationMovement>();
                 rotationMovement.Rotate(90);
 
                 onRotateEvent.Raise();
@@ -100,8 +79,8 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Transform panelTransform = selectedPanel.transform;
-                RotationMovement rotationMovement = panelTransform.GetComponent<RotationMovement>();
+                Transform gateTransform = selectedGate.transform;
+                RotationMovement rotationMovement = gateTransform.GetComponent<RotationMovement>();
                 rotationMovement.Rotate(-90);
 
                 onRotateEvent.Raise();
@@ -109,7 +88,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void HandleSkip(GameObject selectedPanel)
+    void HandleSkip(GameObject selectedGate)
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -119,16 +98,17 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // Use physics to move the panel out of the way in a fun way
-                Rigidbody rigidbody = selectedPanel.GetComponent<Rigidbody>();
-                rigidbody.angularVelocity = selectedPanel.transform.right * 5;
+                // TODO: Should disable the raycast until this gate is cleared to avoid rays piercing this gate and selecting the next gate
+                // TODO: Skip should do a "hard drop" and bring the player forward, so they clear this gate at the same time
+
+                // Use physics to move the gate out of the way in a fun way
+                // Add the rigidbody manually because otherwise we get duplicate player collision events (investigate?)
+                Rigidbody rigidbody = selectedGate.AddComponent<Rigidbody>();
+                rigidbody.angularVelocity = selectedGate.transform.right * 5;
                 rigidbody.velocity = 50 * -Vector3.up;
 
                 onSkipEvent.Raise();
-                onPanelCompletedEvent.Raise();
-
-                // TODO: Is this the right place to do this?
-                Destroy(selectedPanel, 0.5f);
+                onGateCleared.Raise(false);
             }
         }
     }
@@ -140,15 +120,16 @@ public class PlayerController : MonoBehaviour
 
         keyDownTime += Time.deltaTime;
 
+        // TODO: Should key presses at boundaries still count as movement?
         HandleKeyPress(KeyCode.UpArrow, 1, ref deltaY);
         HandleKeyPress(KeyCode.DownArrow, -1, ref deltaY);
         HandleKeyPress(KeyCode.LeftArrow, -1, ref deltaX);
         HandleKeyPress(KeyCode.RightArrow, 1, ref deltaX);
 
         transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x + deltaX, Mathf.Ceil(-levelSettings.panelSize / 2f), Mathf.Floor(levelSettings.panelSize / 2f)),
-            Mathf.Clamp(transform.position.y + deltaY, Mathf.Ceil(-levelSettings.panelSize / 2f), Mathf.Floor(levelSettings.panelSize / 2f)),
-            rabbit.position.z);
+            Mathf.Clamp(transform.position.x + deltaX, Mathf.Ceil(-levelSettings.numTilesPerSide / 2f), Mathf.Floor(levelSettings.numTilesPerSide / 2f)),
+            Mathf.Clamp(transform.position.y + deltaY, Mathf.Ceil(-levelSettings.numTilesPerSide / 2f), Mathf.Floor(levelSettings.numTilesPerSide / 2f)),
+            rabbit.transform.position.z);
     }
 
     private void HandleKeyPress(KeyCode keycode, int increment, ref int delta)
@@ -194,70 +175,43 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Voxel voxel = other.GetComponent<Voxel>();
-        if (voxel != null)
+        Gate gate = other.GetComponent<Gate>();
+        if (gate != null)
         {
-            HandleVoxelCollision(voxel);
-            return;
-        }
-
-        Panel panel = other.GetComponent<Panel>();
-        if (panel != null)
-        {
-            HandlePanelCollision(panel);
-            return;
+            isInputDisabled = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Panel panel = other.GetComponent<Panel>();
-        if (panel != null)
+        Gate gate = other.GetComponent<Gate>();
+        if (gate != null)
         {
             isInputDisabled = false;
-            Destroy(panel.gameObject, 0.1f);
         }
     }
 
-    private void HandleVoxelCollision(Voxel voxel)
+    private Tile GetSelectedTile()
     {
-        if (voxel.isSolid)
-        {
-            onCrashEvent.Raise();
-            onPanelCompletedEvent.Raise();
-        }
-        else if (voxel.isPowerUp)
-        {
-            onPowerUpEvent.Raise();
-            onPanelCompletedEvent.Raise();
-        }
-        else if (voxel.isEmpty)
-        {
-            onPanelCompletedEvent.Raise();
-        }
-    }
-
-    private void HandlePanelCollision(Panel panel)
-    {
-        isInputDisabled = true;
-    }
-
-    private Voxel GetSelectedVoxel()
-    {
-        Voxel selectedVoxel = null;
+        Tile selectedTile = null;
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, (1 << 10))) // Voxels is layer 10
+        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, (1 << 10))) // Tile layer is layer 10
         {
             GameObject target = hit.collider.gameObject;
-            selectedVoxel = target.GetComponentInParent<Voxel>();
-            if (selectedVoxel != null)
+            selectedTile = target.GetComponentInParent<Tile>();
+            if (selectedTile != null)
             {
                 // TODO: Use an event for this?
-                selectedVoxel.isSelected = true;
+                selectedTile.isSelected = true;
             }
         }
 
-        return selectedVoxel;
+        return selectedTile;
+    }
+
+    public void SetLevelSettings(LevelSettings levelSettings)
+    {
+        this.levelSettings = levelSettings;
     }
 }

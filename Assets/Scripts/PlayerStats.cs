@@ -15,7 +15,7 @@ public class PlayerStats : MonoBehaviour
     private IntVariable crashCountVariable;
 
     [SerializeField]
-    private IntVariable powerUpCountVariable;
+    private IntVariable energyCountVariable;
 
     [SerializeField]
     private IntVariable skipCountVariable;
@@ -25,7 +25,7 @@ public class PlayerStats : MonoBehaviour
         moveCountVariable.value = 0;
         rotateCountVariable.value = 0;
         crashCountVariable.value = 0;
-        powerUpCountVariable.value = 0;
+        energyCountVariable.value = 0;
         skipCountVariable.value = 0;
     }
 
@@ -42,17 +42,17 @@ public class PlayerStats : MonoBehaviour
     public void OnSkip()
     {
         skipCountVariable.value++;
-        powerUpCountVariable.value = Mathf.Max(powerUpCountVariable.value - 1, 0);
+        energyCountVariable.value = Mathf.Max(energyCountVariable.value - 1, 0);
     }
 
-    public void OnPowerUp()
+    public void OnEnergy()
     {
-        powerUpCountVariable.value++;
+        energyCountVariable.value++;
     }
 
     public void OnCrash()
     {
         crashCountVariable.value++;
-        powerUpCountVariable.value = Mathf.Max(powerUpCountVariable.value - 2, 0);
+        energyCountVariable.value = Mathf.Max(energyCountVariable.value - 2, 0);
     }
 }

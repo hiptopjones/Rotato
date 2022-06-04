@@ -10,14 +10,14 @@ public class StatsUI : MonoBehaviour
     private IntVariable moveCountVariable;
 
     [SerializeField]
-    private IntVariable powerUpCountVariable;
+    private IntVariable energyCountVariable;
 
     [Header("TextBoxes")]
     [SerializeField]
     private TextMeshProUGUI moveCountTextBox;
 
     [SerializeField]
-    private TextMeshProUGUI powerUpCountTextBox;
+    private TextMeshProUGUI energyCountTextBox;
 
     [SerializeField]
     private TextMeshProUGUI ratioTextBox;
@@ -26,12 +26,12 @@ public class StatsUI : MonoBehaviour
     void Update()
     {
         moveCountTextBox.text = moveCountVariable.value.ToString();
-        powerUpCountTextBox.text = powerUpCountVariable.value.ToString();
+        energyCountTextBox.text = energyCountVariable.value.ToString();
 
         // Avoid divide-by-zero
-        if (powerUpCountVariable.value > 0)
+        if (energyCountVariable.value > 0)
         {
-            ratioTextBox.text = ((float)moveCountVariable.value / powerUpCountVariable.value).ToString("0.##");
+            ratioTextBox.text = ((float)moveCountVariable.value / energyCountVariable.value).ToString("0.##");
         }
         else
         {

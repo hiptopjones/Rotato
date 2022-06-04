@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 160962735}
   - component: {fileID: 160962734}
   m_Layer: 5
-  m_Name: PowerUps Label
+  m_Name: Energy Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Crystals:'
+  m_text: 'Energy:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -422,7 +422,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98a2ae89bc08684e86a7a60ed6383c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onLevelStarted: {fileID: 11400000, guid: 6bc1cf202e714134bb11501ff9489c9e, type: 2}
+  onLevelCompleted: {fileID: 11400000, guid: 4a766011c624f654fa7820b15f81bf13, type: 2}
+  gateClearedListener:
+    gameEvent: {fileID: 11400000, guid: 0e7ec8844e831b34f8f9789eb0def213, type: 2}
+  wormholeClearedListener:
+    gameEvent: {fileID: 0}
 --- !u!4 &173628153
 Transform:
   m_ObjectHideFlags: 0
@@ -431,12 +435,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173628151}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 690.1969, y: 371.17267, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &216766636
 GameObject:
@@ -621,7 +625,7 @@ RectTransform:
   - {fileID: 124873077}
   - {fileID: 772899536}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -638,7 +642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 264030906}
   m_Layer: 0
-  m_Name: Panels
+  m_Name: Gates
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -657,7 +661,38 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &327131246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 327131247}
+  m_Layer: 0
+  m_Name: Wormholes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &327131247
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327131246}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &566149325
 GameObject:
@@ -671,7 +706,7 @@ GameObject:
   - component: {fileID: 566149328}
   - component: {fileID: 566149327}
   m_Layer: 5
-  m_Name: PowerUps Text
+  m_Name: Energy Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -994,7 +1029,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -1225,6 +1260,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725480618}
   m_CullTransparentMesh: 1
+--- !u!1 &741865761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 741865763}
+  - component: {fileID: 741865762}
+  m_Layer: 0
+  m_Name: Wormhole Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &741865762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741865761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b46372a30bf6544ab487359c071dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 327131246}
+  wormholePrefab: {fileID: 3950870115323426585, guid: 350940d5eef715a469ca07befef925f7, type: 3}
+--- !u!4 &741865763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741865761}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &772899535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,6 +1441,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772899535}
   m_CullTransparentMesh: 1
+--- !u!1 &922472976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 922472978}
+  - component: {fileID: 922472977}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &922472977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922472976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82a52bb8e601e54c91306339abe49b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: e43c08b241496bb4d93311531f5ff2b9, type: 2}
+  levelSettings:
+  - {fileID: 11400000, guid: 73ea1ed4c37239f4090565627d371777, type: 2}
+  - {fileID: 11400000, guid: a0f705d3d5a932342a3efb46f0976ca3, type: 2}
+  - {fileID: 11400000, guid: a98dd2e73590ed34fac4626b44ec6835, type: 2}
+  levelCompletedListener:
+    gameEvent: {fileID: 11400000, guid: 4a766011c624f654fa7820b15f81bf13, type: 2}
+--- !u!4 &922472978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922472976}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,7 +1570,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.77, z: 15.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1457,7 +1589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b2d77628039a24a8dff41a50afbc26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  follow: {fileID: 2141918311}
+  follow: {fileID: 2141918309}
   offset: {x: -5, y: 5, z: -10}
 --- !u!1 &1048088789
 GameObject:
@@ -1496,7 +1628,7 @@ MonoBehaviour:
   moveCountVariable: {fileID: 11400000, guid: 30a972570d8007a478e7f3943c100a1a, type: 2}
   rotateCountVariable: {fileID: 11400000, guid: d3ffcef903ddaf44fbd1579df4f01c61, type: 2}
   crashCountVariable: {fileID: 11400000, guid: 375b794c76d10bb4ba5515bdf60864cd, type: 2}
-  powerUpCountVariable: {fileID: 11400000, guid: 66af183dccb5c51419bd507e30d8cc51, type: 2}
+  energyCountVariable: {fileID: 11400000, guid: 66af183dccb5c51419bd507e30d8cc51, type: 2}
   skipCountVariable: {fileID: 11400000, guid: ffdcd31834894434a9d160cbf54a7abe, type: 2}
 --- !u!4 &1048088791
 Transform:
@@ -1511,7 +1643,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1048088792
 MonoBehaviour:
@@ -1525,7 +1657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 8bab3c829162f2e4ba5eeb5690df73f7, type: 2}
+  gameEvent: {fileID: 11400000, guid: cb9983d0f687b0e49848cef9706c56ad, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1553,7 +1685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: ff80cdd33753ba649a6f929c89846925, type: 2}
+  gameEvent: {fileID: 11400000, guid: 697a16ede9fcd1d408c90d91f1bb790d, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1581,13 +1713,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 7aaf40844f0f5b747a7e9a9677032464, type: 2}
+  gameEvent: {fileID: 11400000, guid: c5cdd2ba1fc82664f93588e2b151ab30, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1048088790}
         m_TargetAssemblyTypeName: PlayerStats, Assembly-CSharp
-        m_MethodName: OnPowerUp
+        m_MethodName: OnEnergy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1609,7 +1741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 9dca90b969ff80b40b87614a4d2a02f3, type: 2}
+  gameEvent: {fileID: 11400000, guid: de9fec493c2159d438e1df4150d662ba, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1637,7 +1769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: a61ba035327e6444f99d2dc67405364f, type: 2}
+  gameEvent: {fileID: 11400000, guid: ed962861e1f22604d9ef7da59577cf94, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1663,10 +1795,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1483329542}
   - component: {fileID: 1483329541}
-  - component: {fileID: 1483329544}
-  - component: {fileID: 1483329543}
   m_Layer: 0
-  m_Name: Panel Spawner
+  m_Name: Gate Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1684,14 +1814,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc4e92d3854b08459e3c67a52285663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 264030906}
-  voxelPrefab: {fileID: 2811545611998549637, guid: dbe9e30b64292794f8341a3f82aa71fb, type: 3}
-  panelPrefab: {fileID: 148571075925982848, guid: a65770920e20d0a428b7b72c3fd019ea, type: 3}
-  emptyMaterial: {fileID: 2100000, guid: cf700be7522788f4ab87f3a0a0df1eb2, type: 2}
-  solidMaterial: {fileID: 2100000, guid: 3ec5ac233937b244793411b63d6ef5ca, type: 2}
-  powerUpMaterial: {fileID: 2100000, guid: 5c936b49b3fc62f4fabc1f3cfa75e204, type: 2}
-  levelSettings: {fileID: 11400000, guid: a0f705d3d5a932342a3efb46f0976ca3, type: 2}
-  gameMode: {fileID: 11400000, guid: d940bb53725a4ce4ba00ce9cd9de698e, type: 2}
+  parent: {fileID: 264030905}
+  tilePrefab: {fileID: 2811545611998549637, guid: dbe9e30b64292794f8341a3f82aa71fb, type: 3}
+  gatePrefab: {fileID: 148571075925982848, guid: a65770920e20d0a428b7b72c3fd019ea, type: 3}
 --- !u!4 &1483329542
 Transform:
   m_ObjectHideFlags: 0
@@ -1705,76 +1830,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1483329543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483329540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 1edc7b8ae3cdf614d8d82fb732d0c48e, type: 2}
-  unityEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1483329541}
-        m_TargetAssemblyTypeName: PanelSpawner, Assembly-CSharp
-        m_MethodName: SpawnPanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1483329544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483329540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 6bc1cf202e714134bb11501ff9489c9e, type: 2}
-  unityEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1483329541}
-        m_TargetAssemblyTypeName: PanelSpawner, Assembly-CSharp
-        m_MethodName: SpawnPanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1483329541}
-        m_TargetAssemblyTypeName: PanelSpawner, Assembly-CSharp
-        m_MethodName: SpawnPanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1488176449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1881,9 +1938,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveCountVariable: {fileID: 11400000, guid: 30a972570d8007a478e7f3943c100a1a, type: 2}
-  powerUpCountVariable: {fileID: 11400000, guid: 66af183dccb5c51419bd507e30d8cc51, type: 2}
+  energyCountVariable: {fileID: 11400000, guid: 66af183dccb5c51419bd507e30d8cc51, type: 2}
   moveCountTextBox: {fileID: 725480620}
-  powerUpCountTextBox: {fileID: 566149327}
+  energyCountTextBox: {fileID: 566149327}
   ratioTextBox: {fileID: 772899537}
 --- !u!4 &1797022511
 Transform:
@@ -1898,7 +1955,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1806771222
 GameObject:
@@ -1915,7 +1972,6 @@ GameObject:
   - component: {fileID: 1806771229}
   - component: {fileID: 1806771228}
   - component: {fileID: 1806771227}
-  - component: {fileID: 1806771226}
   - component: {fileID: 1806771231}
   m_Layer: 0
   m_Name: Sound Effects
@@ -2036,8 +2092,7 @@ MonoBehaviour:
   rotateSound: {fileID: 8300000, guid: 6ef888ad4c6642e4fb78cc655ad127b8, type: 3}
   skipSound: {fileID: 8300000, guid: a19bba2f5380bac49ba6f43659676ba6, type: 3}
   crashSound: {fileID: 8300000, guid: 9dc7f7f77bcc28042b7962a83efc906a, type: 3}
-  powerUpSound: {fileID: 8300000, guid: 60c2403e764608d47a202f3f4e96752f, type: 3}
-  invalidSound: {fileID: 8300000, guid: 77abf9115107a2d429db05fedec4fa66, type: 3}
+  energySound: {fileID: 8300000, guid: 60c2403e764608d47a202f3f4e96752f, type: 3}
 --- !u!4 &1806771225
 Transform:
   m_ObjectHideFlags: 0
@@ -2051,36 +2106,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1806771226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806771222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 7aaf40844f0f5b747a7e9a9677032464, type: 2}
-  unityEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1806771224}
-        m_TargetAssemblyTypeName: SoundEffectsController, Assembly-CSharp
-        m_MethodName: PlayPowerUpSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1806771227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2093,7 +2120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: ff80cdd33753ba649a6f929c89846925, type: 2}
+  gameEvent: {fileID: 11400000, guid: 697a16ede9fcd1d408c90d91f1bb790d, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2121,7 +2148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 8bab3c829162f2e4ba5eeb5690df73f7, type: 2}
+  gameEvent: {fileID: 11400000, guid: cb9983d0f687b0e49848cef9706c56ad, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2149,7 +2176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 9dca90b969ff80b40b87614a4d2a02f3, type: 2}
+  gameEvent: {fileID: 11400000, guid: de9fec493c2159d438e1df4150d662ba, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2177,7 +2204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: a61ba035327e6444f99d2dc67405364f, type: 2}
+  gameEvent: {fileID: 11400000, guid: ed962861e1f22604d9ef7da59577cf94, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2205,13 +2232,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c405fa3d1cee499c07b3206b100af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 12dc72feb26cce045ba1bd3e0a158921, type: 2}
+  gameEvent: {fileID: 11400000, guid: c5cdd2ba1fc82664f93588e2b151ab30, type: 2}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1806771224}
         m_TargetAssemblyTypeName: SoundEffectsController, Assembly-CSharp
-        m_MethodName: PlayInvalidSound
+        m_MethodName: PlayEnergySound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2268,16 +2295,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0b6226da3c5b343999166816008a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rabbit: {fileID: 2141918311}
-  levelSettings: {fileID: 11400000, guid: a0f705d3d5a932342a3efb46f0976ca3, type: 2}
+  rabbit: {fileID: 2141918309}
   gameSettings: {fileID: 11400000, guid: e43c08b241496bb4d93311531f5ff2b9, type: 2}
-  onMoveEvent: {fileID: 11400000, guid: a61ba035327e6444f99d2dc67405364f, type: 2}
-  onRotateEvent: {fileID: 11400000, guid: 9dca90b969ff80b40b87614a4d2a02f3, type: 2}
-  onCrashEvent: {fileID: 11400000, guid: ff80cdd33753ba649a6f929c89846925, type: 2}
-  onPowerUpEvent: {fileID: 11400000, guid: 7aaf40844f0f5b747a7e9a9677032464, type: 2}
-  onSkipEvent: {fileID: 11400000, guid: 8bab3c829162f2e4ba5eeb5690df73f7, type: 2}
-  onInvalidEvent: {fileID: 11400000, guid: 12dc72feb26cce045ba1bd3e0a158921, type: 2}
-  onPanelCompletedEvent: {fileID: 11400000, guid: 1edc7b8ae3cdf614d8d82fb732d0c48e, type: 2}
+  onMoveEvent: {fileID: 11400000, guid: ed962861e1f22604d9ef7da59577cf94, type: 2}
+  onRotateEvent: {fileID: 11400000, guid: de9fec493c2159d438e1df4150d662ba, type: 2}
+  onSkipEvent: {fileID: 11400000, guid: cb9983d0f687b0e49848cef9706c56ad, type: 2}
+  onGateCleared: {fileID: 11400000, guid: 0e7ec8844e831b34f8f9789eb0def213, type: 2}
 --- !u!54 &1875896981
 Rigidbody:
   m_ObjectHideFlags: 0

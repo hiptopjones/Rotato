@@ -17,7 +17,7 @@ public class SoundEffectsController : MonoBehaviour
     private AudioClip crashSound;
 
     [SerializeField]
-    private AudioClip powerUpSound;
+    private AudioClip energySound;
 
     private AudioSource audioSource;
 
@@ -54,9 +54,9 @@ public class SoundEffectsController : MonoBehaviour
         audioSource.Play();
     }
 
-    public void PlayPowerUpSound()
+    public void PlayEnergySound()
     {
-        audioSource.clip = powerUpSound;
+        audioSource.clip = energySound;
         audioSource.Play();
     }
 }
